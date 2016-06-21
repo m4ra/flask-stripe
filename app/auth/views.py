@@ -24,13 +24,10 @@ def index():
 @auth.route('/charge/<plan_id>', methods=['GET', 'POST'])
 def charge(plan_id):
     plan = Plan.query.filter_by(plan_id=plan_id).first()
+    # Amount in cents for the stripe API
     amount = plan.amount
     plan_name = plan.name
     if request.method == 'POST':
-        #amount=request.form['amount']
-        #plan=request.form['plan']
-        #plan_name=request.form['plan_name']
-	# Amount in cents
 
 	customer = stripe.Customer.create(
             plan=plan_id,
