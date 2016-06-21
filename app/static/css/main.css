@@ -1,0 +1,13 @@
+body {
+  	padding-top: 30px;
+ }
+
+.template {
+	margin: 0 auto;
+  	min-height: 400px;
+	width:600px;
+}
+
+.selectpicker {
+	width: auto;
+}

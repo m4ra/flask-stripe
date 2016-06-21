@@ -1,0 +1,9 @@
+{% extends "index.html" %}
+
+
+{% block content %}
+<h3>Thanks, your plan <strong>{{plan_name}} subscription of ${{amount/100}} is complete</strong>!</h3>
+  <h4>You will soon receive an email confirmation. If not please contact us.</h4>
+  <input type="hidden" name="is_paid" value="True"/>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "index.html" %}
+{% block stripe_js %}
+  <script type="text/javascript">
+  	var stripe_key = "{{key}}"
+  	$(document).ready(function(){
+   
+  		// This identifies the website in the createToken call in js/global.js
+  		Stripe.setPublishableKey(stripe_key);
+  		// Comment out this line, if you don't want to auto-populate test data
+  		test_data.load()
+	});
+  </script>
+
+{% endblock stripe_js %}
+{% block stripe_styles %}
+  <style type="text/css" media="screen">
+    .has-error input {
+      border-width: 2px;
+    }
+
+    .validation.text-danger:after {
+      content: 'Validation failed';
+    }
+
+    .validation.text-success:after {
+      content: 'Validation passed';
+    }
+  </style>
+{% endblock stripe_styles %}
+{% block content %}
+
+  <div id="new-customer">
+<!---->
+<form action="{{url_for('auth.charge', plan_id=plan_id)}}" method="POST" id="payment-form" class="form-horizontal span6">
+	<legend>{{plan_name}} for ${{amount/100}} with Stripe</legend>
+
+    <span class="payment-errors"></span>
+ 
+ 	<div class="control-group">
+		<label class="control-label">Email</label>
+		<div class="controls">
+			<div class="row-fluid">
+				<div class="span7">
+					<input type="text" class="input-block-level" maxlength="20" data-stripe="email" name="email"/>
+				</div>
+			</div>
+      	</div>
+    </div>
+    <!---->
+    <div class="control-group">
+		<label class="control-label">Card Number</label>
+		<div class="controls">
+			<div class="row-fluid">
+				<div class="span7">
+					<!-- Not using name="" so that the data doesn't hit local server (only stripe)-->
+        			<input type="text" class="input-block-level" maxlength="20" data-stripe="number"/>
+      			</div>
+      		</div>	
+      </div>
+    </div>
+ 
+ 	<!---->
+    <div class="control-group">
+		<label class="control-label">CVC</label>
+		<div class="controls">
+			<div class="row-fluid">
+				<div class="span3">
+        			<input type="text" class="input-block-level" maxlength="3" data-stripe="cvc"/>
+    			</div>
+			</div>
+      	</div>
+    </div>
+ 
+ 	<!---->
+    <div class="control-group">
+		<label class="control-label">Expiration (MM/YYYY)</label>
+		<div class="controls">
+			<div class="row-fluid">
+				<div class="span3">
+					<input type="text" class="input-block-level" size="2" data-stripe="exp-month"/>
+    			</div>
+				<div class="span4">
+					<input type="text" class="input-block-level" size="4" data-stripe="exp-year"/>
+  				</div>
+			</div>
+  		</div>
+    </div>
+    <!---->
+
+  <input type="hidden" name="plan_id" value="{{ plan_id }}"/>
+  <input type="hidden" name="plan_name" value="{{ plan }}"/>
+  <input type="hidden" name="amount" value="{{ amount }}"/>
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"/>
+    <div class="form-actions">
+    <button type="submit" class="btn btn-default">Submit Subscription</button>
+	</div>
+
+</form>
+
+{% endblock content%}

@@ -1,0 +1,46 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+{% block meta %}
+<title>Stripe</title>
+{% endblock meta %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/2.3.1/css/bootstrap.min.css">
+{% endblock styles %}
+
+{% block script %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="{{url_for('static', filename='js/global.js')}}"></script>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+{% endblock script %}
+
+{% block stripe_styles %}
+{% endblock stripe_styles %}
+
+{% block stripe_js %}
+{% endblock stripe_js %}
+
+</head>
+<body>
+    <div class="template"> 
+    {% block content %}
+	<h2>Welcome, please select a plan</h2> 
+	    <form class="form-inline" method="POST" action="{{ url_for('auth.index') }}">
+		<select name="plan_select" class="selectpicker form-control">
+		    {% for p in plans %}
+			<option value="{{ p.plan_id }}">Amount is ${{p.amount/100}} for plan {{ p.name }}</option>
+		    {% endfor %}
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"
+		</select>
+		<button type="submit" class="btn btn-default">Proceed to Subscription</button>
+	    </div>
+	</form>
+    </div>
+  
+	{% endblock %}
+</body>
+</html>
