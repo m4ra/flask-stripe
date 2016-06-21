@@ -26,13 +26,15 @@ B. Steps  followed for the stripe flask app using blueprint 'auth' - it can help
 
 3. Install Flask-SQLalchemy so flask talks to sqlite or any other database we have configured in config.py
 
-4. Create the views for the payment - in this strip app, they are located at app/auth/views.py - replace app dir with your desirable dir depending which route you want to use e.g it can be under the auth dir so that's accessible for authenticated users.
+4. Create the models, see app/models.py -- I created User, and Plan with an insert method for plans' id, names and amounts 
 
-5. Create the webhook views for receiveng stripe responses when subscription events are completed. here this is located at app/views.py. In this file we can also set the actions we want to happen when subscriptions succeed, e.g send an email or/and update the users, plans databases.
+5. Create the views for the payment - in this strip app, they are located at app/auth/views.py - replace app dir with your desirable dir depending which route you want to use e.g it can be under the auth dir so that's accessible for authenticated users.
 
-6. Create the templates - see app/template dir
+6. Create the webhook views for receiveng stripe responses when subscription events are completed. here this is located at app/views.py. In this file we can also set the actions we want to happen when subscriptions succeed, e.g send an email or/and update the users, plans databases.
 
-6. Other dependecies:
+7. Create the templates - see app/template dir
+
+8. Other dependecies:
   pip install coverage -- (for testing)
   pip install Flask-Script
   pip install Flask-Migrate -- (for manager migration command)
