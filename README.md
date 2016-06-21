@@ -14,7 +14,8 @@ A. Pull from github and run the stripe flask app
 7. python manage.py runserver
 8. navigate to 127.0.0.1:5000/auth/
 
-B. Steps for the stripe flask app with blueprint 'auth' - it can help with how to integrate the app to an existing project.
+
+B. Steps  followed for the stripe flask app using blueprint 'auth' - it can help for how to integrate the app to an existing project.
 
 1. In virtualenv or machine install stripe with
 
