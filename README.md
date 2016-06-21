@@ -1,8 +1,14 @@
 A. Pull from github and run the stripe flask app
-1. cd stripe && pip install -r requirements.txt
-2. python manage.py db init
-3. python manage.py db upgrade
-4. navigate to 127.0.0.1:5000/auth/
+1. git clone git@github.com:Pathio/pathio-stripe.git && pull origin master
+2. cd stripe && pip install -r requirements.txt
+3. python manage.py db init
+4. python manage.py db upgrade
+5. To populate the plans db with the stripe plans id, names and amounts
+   python manage.py shell
+   >>> p=Plan()
+   >>> p.insert_plan_descriptions()  
+6. python manage.py runserver
+7. navigate to 127.0.0.1:5000/auth/
 
 B. Steps for the stripe flask app with blueprint 'auth' - it can help with how to integrate the app to an existing project.
 
