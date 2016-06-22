@@ -7,6 +7,7 @@ enum34==1.1.6
 Flask==0.11.1
 Flask-Migrate==1.8.0
 Flask-Script==2.0.5
+Flask-SeaSurf==0.2.2
 Flask-SQLAlchemy==2.1
 idna==2.1
 ipaddress==1.0.16
