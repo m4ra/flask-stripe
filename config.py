@@ -17,11 +17,11 @@ class DevelopmentConfig(Config):
      #   'postgresql:///' + os.path.join(basedir, 'data-dev.sqlite')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-    
-    # Stripe configuration: 
+    # Stripe configuration:
     # https://stripe.com/docs/checkout/guides/flask
     # modified execution string:  
-    #  PUBLISHABLE_KEY=pk_test_6pRNASCoBOKtIshFeQd4XMUh SECRET_KEY=sk_test_BQokikJOvBiI2HlWgH4olfQ2 python manage.py runserver
+    #  PUBLISHABLE_KEY=<test publishable key from stripe API> SECRET_KEY=<test
+    #  secret key from stripe API> python manage.py runserver
 
     STRIPE_KEYS = {
         # 'secret_key': os.environ['SECRET_KEY'],

@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, g, current_app
+from flask import render_template, redirect, request, url_for, flash, g, current_app, json
 import stripe
 from . import auth
 from app.models import User, Plan
@@ -20,7 +20,6 @@ def index():
     return render_template('index.html', plans=plans)
 
 
-#@csrf_exempt
 @auth.route('/charge/<plan_id>', methods=['GET', 'POST'])
 def charge(plan_id):
     plan = Plan.query.filter_by(plan_id=plan_id).first()
@@ -47,10 +46,47 @@ def charge(plan_id):
         #amount=int(request.args.get('amount')), plan=request.args.get('plan'), plan_id=request.args.get('plan_id'), key=current_app.config['STRIPE_KEYS']['publishable_key'])
         amount=amount, plan_name=plan_name, plan_id=plan_id, key=current_app.config['STRIPE_KEYS']['publishable_key'])
 
-
-@auth.route('/success/<plan_id>', methods=['GET', 'POST'])
+@auth.route('/success/<plan_id>', methods=['GET'])
 def success(plan_id):
-    plan=Plan.query.filter_by(plan_id=plan_id).first() 
+    plan=Plan.query.filter_by(plan_id=plan_id).first()
     plan_name=plan.name
     amount=plan.amount
     return render_template('success.html', plan_name=plan_name, amount=amount)
+
+
+# Webhooks are always sent as HTTP POST requests, so we want to ensure
+# that only POST requests will reach your webhook view. We can do that by
+# decorating `webhook()`.
+#
+# Then to ensure that the webhook view can receive webhooks, we need
+# also need to decorate `webhook()` with `csrf_exempt`.
+@csrf.exempt
+@auth.route('/webhook', methods=['POST'])
+def webhook():
+    stripe.api_key=current_app.config['STRIPE_KEYS']['secret_key']
+    # Retrieve the request's body and parse it as JSON
+    event_json = request.get_json()
+
+    #Do something with event_json
+    import pprint
+    pprint.pprint(event_json['data'], width=1)
+    #customer's id
+    print event_json['data']['object']['id']
+    #customer's email
+    print event_json['data']['object']['email']
+    #plan's id
+    print event_json['data']['object']['subscriptions']['data'][0]['plan']['id']
+    if event_json['type'] == 'charge.succeeded':
+        print True
+        customer_email= event_json['data']['object']['email']  #customer's email
+        #Do something here e.g update the user database or/and email notification
+        #u=User.query.filter_by(email=customer_email).first()
+        #E.g if users have a column payment we can update it
+        #setattr(u, payment, True)
+        #p=Plan.query.filter_by(id=plan_id).first()
+        #setattr(p, users, u.username)
+
+        #db.session.add(u)
+        #db.session.add(p)
+        #db.session.commit()
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
