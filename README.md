@@ -1,21 +1,18 @@
-A. Pull from github and run the stripe flask app
-
-1. git clone git@github.com:Pathio/pathio-stripe.git
-2. activate virtualenv
-3. cd stripe && pip install -r requirements.txt
-4. python manage.py db init
-5. python manage.py db upgrade
-6. To populate the plans db with the stripe plans id, names and amounts
+A. Quick setup for subscription payments
+1. Pull repo
+2. cd stripe && pip install -r requirements.txt
+3. python manage.py db upgrade
+4. To populate the database with subscription plans id, names and amounts
    
 		python manage.py shell
 
    		p=Plan()
    		p.insert_plan_descriptions()  
-7. python manage.py runserver
-8. navigate to 127.0.0.1:5000/auth/
+6. python manage.py runserver
+7. navigate to 127.0.0.1:5000/auth/
 
 
-B. Steps  followed for the stripe flask app using blueprint 'auth' - it can help for how to integrate the app to an existing project.
+B. Steps followed for the stripe flask app using blueprint 'auth' - it can help for how to integrate the app into an existing project.
 
 1. In virtualenv or machine install stripe with
 
