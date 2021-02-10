@@ -2,7 +2,7 @@ alembic==0.8.6
 cffi!=1.11.3,>=1.8
 click==6.6
 coverage==4.1
-cryptography==3.2
+cryptography==3.3.2
 enum34==1.1.6
 Flask==1.0
 Flask-Migrate==1.8.0
